@@ -1,9 +1,15 @@
 import React from 'react'
-// import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from './utils/BooksAPI'
 import './App.css'
+import Library from './components/Library';
+
+
 
 class BooksApp extends React.Component {
   state = {
+    books: [],
+
+
     /**
      * TODO: Instead of using this state variable to keep track of which page
      * we're on, use the URL in the browser's address bar. This will ensure that
@@ -13,7 +19,33 @@ class BooksApp extends React.Component {
     showSearchPage: false
   }
 
+  componentDidMount() {
+    BooksAPI.getAll()
+      .then((books) => {
+        this.setState(() => ({
+          books
+        }));
+      });
+  };
+
+  selectShelf = (newBook, shelf) => {
+    BooksAPI.update(newBook, shelf)
+      .then((res) => {
+        // set shelf for new or updated book:
+        newBook.shelf = shelf;
+        // update state with new book:
+        this.setState((currentState) => ({
+          books: currentState.books
+            // remove updated book from array:
+            .filter(book => book.id !== newBook.id)
+            // add updated book to array:
+            .concat(newBook)
+        }));
+      });
+  };
+
   render() {
+    const { books } = this.state;
     return (
       <div className="app">
         {this.state.showSearchPage ? (
@@ -38,7 +70,28 @@ class BooksApp extends React.Component {
             </div>
           </div>
         ) : (
-          <div className="list-books">
+          <div>
+            <Library
+              books={books}
+              selectShelf={this.selectShelf}
+            />
+          <div className="open-search">
+              <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
+            </div>
+          </div>
+        )}
+      </div>
+    )
+  }
+}
+
+export default BooksApp
+
+
+
+
+
+          {/* <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
@@ -192,15 +245,4 @@ class BooksApp extends React.Component {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="open-search">
-              <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
-            </div>
-          </div>
-        )}
-      </div>
-    )
-  }
-}
-
-export default BooksApp
+            </div> */}

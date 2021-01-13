@@ -6,7 +6,7 @@ import BookShelf from './BookShelf';
 const Library = props => {
     const { books, selectShelf } = props;
     /*     
-    create an object for the 3 different shelfes and there ID which can be matched with the "shelf"
+    create an object for the 3 different shelfes and their ID which can be matched with the "shelf"
     property from the books from the BooksAPI: */
     const bookShelfs = [
         { id: "currentlyReading", name: "Currently Reading" },
@@ -16,7 +16,7 @@ const Library = props => {
 
     /* 
     first: map over the bookShelfs object
-    second: create the booksOnTheShelf constant to to filter only the books that belong to the particular shelf.
+    second: create the booksOnTheShelf constant to filter only the books that belong to the particular shelf.
     third: return a BookShelf Component for each of the three bookShelfs from the bookShelfs object.
      */
     return (

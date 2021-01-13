@@ -5,7 +5,8 @@ const BookShelf = props => {
     const { books, selectShelf } = props;
 
     /* 
-    Map over the "books" props to render every single book with the Book Component:
+    Map over the "books" props to render every single book with the Book Component
+    and pass the Book Component "books", "book" and "selectShelf" as Props
     */
     return (
           <ol className="books-grid">

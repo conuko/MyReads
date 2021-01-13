@@ -31,7 +31,7 @@ const Library = props => {
                         <div className="bookshelf" key={bookShelf}>
                             <h2 className="bookshelf-title">{bookShelf.name}</h2>
                             <div className="bookshelf-books">
-                                <BookShelf
+                                <BookShelf key={bookShelf.id}
                                     books={booksOnTheShelf}
                                     selectShelf={selectShelf}
                                 />

@@ -4,7 +4,7 @@ import BookShelf from './BookShelf';
 
 
 const Library = props => {
-    const { books, selectShelf } = props;
+    const { books, onSelectShelf } = props;
     /*     
     create an object for the 3 different shelfes and their ID which can be matched with the "shelf"
     property from the books from the BooksAPI: */
@@ -33,7 +33,7 @@ const Library = props => {
                             <div className="bookshelf-books">
                                 <BookShelf key={bookShelf.id}
                                     books={booksOnTheShelf}
-                                    selectShelf={selectShelf}
+                                    onSelectShelf={onSelectShelf}
                                 />
                             </div>
                         </div>

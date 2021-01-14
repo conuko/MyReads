@@ -2,7 +2,7 @@ import React from 'react';
 import BookShelfChanger from './BookShelfChanger';
 
 const Book = props => {
-    const { books, book, selectShelf } = props;
+    const { books, book, onSelectShelf } = props;
     return (
         <li>
             <div className="book">
@@ -16,7 +16,7 @@ const Book = props => {
                     <BookShelfChanger 
                         books={books}
                         book={book}
-                        selectShelf={selectShelf}
+                        onSelectShelf={onSelectShelf}
                     />
                 </div>
             <div className="book-title">{books.title}</div>

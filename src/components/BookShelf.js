@@ -2,7 +2,7 @@ import React from 'react';
 import Book from './Book';
 
 const BookShelf = props => {
-    const { books, selectShelf } = props;
+    const { books, onSelectShelf } = props;
 
     /* 
     Map over the "books" props to render every single book with the Book Component
@@ -15,8 +15,8 @@ const BookShelf = props => {
                     <Book key={book.title}
                         books={books}
                         book={book}
-                        selectShelf={selectShelf}
-                        />
+                        onSelectShelf={onSelectShelf}
+                    />
                 );
             })}
           </ol>

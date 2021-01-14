@@ -3,7 +3,8 @@ import * as BooksAPI from './utils/BooksAPI'
 import './App.css'
 import Library from './components/Library';
 import SearchBooks from './components/SearchBooks';
-
+import Route from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 class BooksApp extends React.Component {
@@ -79,8 +80,14 @@ class BooksApp extends React.Component {
               books={books}
               onSelectShelf={this.onSelectShelf}
             />
-          <div className="open-search">
-              <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
+            <div className="open-search">
+
+            <Link to="/searchBook">
+              <button type="button">
+                Add a book
+              </button>
+            </Link>
+
             </div>
           </div>
         )}

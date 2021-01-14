@@ -19,6 +19,10 @@ class BooksApp extends React.Component {
     showSearchPage: false
   }
 
+  /* 
+  set the initial state with the getAll method from the BooksAPI inside the
+  componentDidMount lifecycle event:*/
+
   componentDidMount() {
     BooksAPI.getAll()
       .then((books) => {
@@ -28,17 +32,31 @@ class BooksApp extends React.Component {
       });
   };
 
+  /* 
+  this callback method is used to move a book from one shelf to another with the
+  select options from BookShelfChanger Component and the update method from
+  the BooksAPI:
+  */
   onSelectShelf = (newBook, newShelf) => {
     BooksAPI.update(newBook, newShelf)
       .then((res) => {
-        // the shelf property from the book API is set to the newShelf poperty
+        /*
+        the shelf property from the book API (passed as a callback as "newBook" from BookShelfChanger)
+        is set to the newShelf poperty
+        */
         newBook.shelf = newShelf;
-        // update state with new book:
+        /*
+        update the state with new book:
+        */
         this.setState((currentState) => ({
           books: currentState.books
-            // remove the book from the old shelf:
+            /*
+            remove the book from the old shelf:
+            */
             .filter((book) => (book.id !== newBook.id))
-            // and add it to the new, selected shelf:
+            /*
+            and add it to the new, selected shelf:
+            */
             .concat([newBook])
         }));
       });

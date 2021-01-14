@@ -4,7 +4,8 @@ class BookShelfChanger extends React.Component {
     
 
     handleChange = event => {
-        this.props.onSelectShelf(this.props.book, event.target.value);
+        const { value } = event.target
+        this.props.onSelectShelf(this.props.book, value);
     }
 
 
@@ -13,7 +14,7 @@ class BookShelfChanger extends React.Component {
 
         return (
             <div className="book-shelf-changer">
-                <select value={book.shelf ? book.shelf : 'none'} onChange={this.handleChange}>
+                <select value={book.shelf} onChange={this.handleChange}>
                     <option value="move" disabled>Move to...</option>
                     <option value="currentlyReading">Currently Reading</option>
                     <option value="wantToRead">Want to Read</option>

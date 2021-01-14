@@ -28,18 +28,18 @@ class BooksApp extends React.Component {
       });
   };
 
-  selectShelf = (newBook, shelf) => {
-    BooksAPI.update(newBook, shelf)
+  onSelectShelf = (newBook, newShelf) => {
+    BooksAPI.update(newBook, newShelf)
       .then((res) => {
-        // set shelf for new or updated book:
-        newBook.shelf = shelf;
+        // the shelf property from the book API is set to the newShelf poperty
+        newBook.shelf = newShelf;
         // update state with new book:
         this.setState((currentState) => ({
           books: currentState.books
-            // remove updated book from array:
-            .filter(book => book.id !== newBook.id)
-            // add updated book to array:
-            .concat(newBook)
+            // remove the book from the old shelf:
+            .filter((book) => (book.id !== newBook.id))
+            // and add it to the new, selected shelf:
+            .concat([newBook])
         }));
       });
   };
@@ -73,7 +73,7 @@ class BooksApp extends React.Component {
           <div>
             <Library
               books={books}
-              selectShelf={this.selectShelf}
+              onSelectShelf={this.onSelectShelf}
             />
           <div className="open-search">
               <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>

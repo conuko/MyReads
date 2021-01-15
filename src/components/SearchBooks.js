@@ -6,29 +6,25 @@ import { Link } from 'react-router-dom';
 class SearchBooks extends React.Component {
     state = {
         filteredBooks: [],
-        searchText: ''
-    }
+        searchText: '',
+    };
 
     updateSearchText = searchText => {
         this.setState(() => ({
-            searchText: searchText.trim()
+            searchText: searchText
         }));
-        if (searchText === '') {
+        if (searchText !== '') {
+            BooksAPI.search(searchText)
+            .then(books => {
+                books.length > 0
+                ? this.setState({ filteredBooks: books })
+                : this.setState({ filteredBooks: [] })
+            });
+        } else if (searchText === '') {
             this.setState(() => ({
-                filteredBooks: []
+                filteredBooks: [],
             }));
         }
-        BooksAPI.search(this.state.searchText)
-            .then(books => {
-                if (books.length > 0) {
-                    this.setState(() => ({
-                        filteredBooks: books
-                    }));
-                }
-                this.setState(() => ({
-                    filteredBooks: []
-                }));
-            });
     };
 
     render() {
@@ -53,23 +49,21 @@ class SearchBooks extends React.Component {
                 </div>
                 </div>
             <div className="search-books-results">
-                {filteredBooks.length > 0 && (
-                    <ol className="books-grid">
-                        {filteredBooks.map(book => {
-                            return (
-                                <Book key={book.title}
-                                    books={books}
-                                    book={book}
-                                    onSelectShelf={onSelectShelf}
-                                />
-                            );
-                        })};
-                    </ol>
-                )} 
+                <ol className="books-grid">
+                    {filteredBooks.map(book => {
+                        return (
+                            <Book key={book.title}
+                                books={books}
+                                book={book}
+                                onSelectShelf={onSelectShelf}
+                            />
+                        )
+                    })}
+                </ol>
             </div>
           </div>
         );
     };
-}
+};
 
 export default SearchBooks;

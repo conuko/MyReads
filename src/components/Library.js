@@ -1,8 +1,6 @@
 import React from 'react';
 import BookShelf from './BookShelf';
 
-
-
 const Library = props => {
     const { books, onSelectShelf } = props;
     /*     

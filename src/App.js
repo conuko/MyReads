@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 class BooksApp extends React.Component {
   state = {
     books: [],
-  }
+  };
   /* 
   set the initial state with the getAll method from the BooksAPI inside the
   componentDidMount lifecycle event:

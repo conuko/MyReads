@@ -5,7 +5,7 @@ class BookShelfChanger extends React.Component {
     handleChange = event => {
         const { value } = event.target
         this.props.onSelectShelf(this.props.book, value);
-    }
+    };
 
     render() {
         const { book, books } = this.props;
@@ -21,7 +21,7 @@ class BookShelfChanger extends React.Component {
             if (element.title === book.title) {
                 defaultShelf = element.shelf
             }
-        })
+        });
 
         return (
             <div className="book-shelf-changer">
@@ -34,10 +34,7 @@ class BookShelfChanger extends React.Component {
                 </select>
             </div>
         );
-    }
-
-}
-
-
+    };
+};
 
 export default BookShelfChanger;

@@ -12,15 +12,15 @@ const BookShelf = props => {
           <ol className="books-grid">
             {books.map(book => {
                 return (
-                    <Book key={book.title}
+                    <Book key={book.id}
                         books={books}
                         book={book}
                         onSelectShelf={onSelectShelf}
                     />
-                );
+                )
             })}
           </ol>
     );
-}
+};
 
 export default BookShelf;

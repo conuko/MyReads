@@ -3,29 +3,17 @@ import * as BooksAPI from './utils/BooksAPI'
 import './App.css'
 import Library from './components/Library';
 import SearchBooks from './components/SearchBooks';
-import Route from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-
 
 class BooksApp extends React.Component {
   state = {
     books: [],
-
-
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: false
   }
-
   /* 
   set the initial state with the getAll method from the BooksAPI inside the
   componentDidMount lifecycle event:
   */
-
   componentDidMount() {
     BooksAPI.getAll()
       .then((books) => {
@@ -34,7 +22,6 @@ class BooksApp extends React.Component {
         }));
       });
   };
-
   /* 
   this callback method is used to move a book from one shelf to another with the
   select options from BookShelfChanger Component and the update method from
@@ -69,31 +56,32 @@ class BooksApp extends React.Component {
     const { books } = this.state;
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-          <SearchBooks
-            books={books}
-            onSelectShelf={this.onSelectShelf}
-          />
-        ) : (
-          <div>
+        <div>
+          <Route exact path="/" render={() => (
             <Library
               books={books}
               onSelectShelf={this.onSelectShelf}
             />
-            <div className="open-search">
-
+          )} />
+          <div className="open-search">
             <Link to="/searchBook">
               <button type="button">
                 Add a book
               </button>
             </Link>
-
-            </div>
           </div>
-        )}
+        </div>
+        <div>
+          <Route path="/searchBook" render={() => (
+              <SearchBooks
+                books={books}
+                onSelectShelf={this.onSelectShelf}
+              />
+          )} />
+        </div>
       </div>
-    )
-  }
-}
+    );
+  };
+};
 
 export default BooksApp

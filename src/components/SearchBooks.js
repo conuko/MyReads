@@ -9,10 +9,16 @@ class SearchBooks extends React.Component {
         searchText: '',
     };
 
+    /* 
+    first: take the input from the user to update the searchText state
+    second: take the searchText state to update the filteredBooks state
+    the filteredBooks state will then be rendered to the ui
+    */
     updateSearchText = searchText => {
         this.setState(() => ({
             searchText: searchText
         }));
+        
         if (searchText !== '') {
             BooksAPI.search(searchText)
             .then(books => {
@@ -20,6 +26,7 @@ class SearchBooks extends React.Component {
                 ? this.setState({ filteredBooks: books })
                 : this.setState({ filteredBooks: [] })
             });
+            /* if the searchText state is empty again, the filteredBooks state will also be set to empty: */
         } else if (searchText === '') {
             this.setState(() => ({
                 filteredBooks: [],

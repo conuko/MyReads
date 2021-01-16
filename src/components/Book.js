@@ -11,7 +11,7 @@ const Book = props => {
                         className="book-cover"
                         alt="book-cover"
                         style={{ width: 128, height: 193 }}
-                        src={book.imageLinks.thumbnail}
+                        src={book.imageLinks ? book.imageLinks.thumbnail : ''}
                     /> 
                     <BookShelfChanger 
                         books={books}

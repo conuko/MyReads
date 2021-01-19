@@ -6,10 +6,30 @@ import SearchBooks from './components/SearchBooks';
 import { Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
+
+/*     
+create an array for the 3 different shelfes with their id and name:
+*/
+const bookShelfs = [
+  { 
+      id: "currentlyReading",
+      name: "Currently Reading"
+  },
+  { 
+      id: "wantToRead",
+      name: "Want to Read"
+  },
+  { 
+      id:"read", 
+      name: "Read"
+  }
+];
+
 class BooksApp extends React.Component {
   state = {
     books: [],
   };
+  
   /* 
   set the initial state with the getAll method from the BooksAPI inside the
   componentDidMount lifecycle event:
@@ -18,7 +38,7 @@ class BooksApp extends React.Component {
     BooksAPI.getAll()
       .then((books) => {
         this.setState(() => ({
-          books
+          books: books
         }));
       });
   };
@@ -27,27 +47,20 @@ class BooksApp extends React.Component {
   select options from BookShelfChanger Component and the update method from
   the BooksAPI:
   */
-  onSelectShelf = (newBook, newShelf) => {
-    BooksAPI.update(newBook, newShelf)
-      .then((res) => {
+  onSelectShelf = async (newBook, value) => {
+    await BooksAPI.update(newBook, value)
+      .then(() => {
         /*
-        the shelf property from the book API (passed as a callback as "newBook" from BookShelfChanger)
-        is set to the newShelf poperty
+        update the shelf property of the BooksAPI (newBook) with the selected value (this value was updated as an 
+        event in the BookShelfChanger and then passed back):
         */
-        newBook.shelf = newShelf;
+        newBook.shelf = value;
         /*
-        update the state with new book:
+        update the state with newBook and filter out the book (if it's there). The concat will add the book
+        to the end of the array:
         */
         this.setState((currentState) => ({
-          books: currentState.books
-            /*
-            remove the book from the old shelf:
-            */
-            .filter((book) => (book.id !== newBook.id))
-            /*
-            and add it to the new, selected shelf:
-            */
-            .concat([newBook])
+          books: currentState.books.filter((b) => (b.id !== newBook.id)).concat(newBook),
         }));
       });
   };
@@ -61,6 +74,7 @@ class BooksApp extends React.Component {
             <Library
               books={books}
               onSelectShelf={this.onSelectShelf}
+              bookShelfs={bookShelfs}
             />
           )} />
           <div className="open-search">

@@ -2,20 +2,11 @@ import React from 'react';
 import BookShelf from './BookShelf';
 
 const Library = props => {
-    const { books, onSelectShelf } = props;
-    /*     
-    create an object for the 3 different shelfes and their ID which can be matched with the "shelf"
-    property from the books from the BooksAPI: */
-    const bookShelfs = [
-        { id: "currentlyReading", name: "Currently Reading" },
-        { id: "wantToRead", name: "Want to Read" },
-        { id: "read", name: "Read" }
-    ];
+    const { books, onSelectShelf, bookShelfs } = props;
 
     /* 
-    first: map over the bookShelfs object
-    second: create the booksOnTheShelf constant to filter only the books that belong to the particular shelf.
-    third: return a BookShelf Component for each of the three bookShelfs from the bookShelfs object.
+    first: map over the bookShelfs object, imported as props from the App Component.
+    second: return a BookShelf Component for each of the three bookShelfs from the bookShelfs object.
      */
     return (
         <div className="list-books">
@@ -24,20 +15,14 @@ const Library = props => {
             </div>
             <div className="list-books-content">
                 {bookShelfs.map((bookShelf) => {
-                    const booksOnTheShelf = books.filter(book => book.shelf === bookShelf.id);
                     return(
-                        <div className="bookshelf" key={bookShelf}>
-                            <h2 className="bookshelf-title">{bookShelf.name}</h2>
-                            <div className="bookshelf-books">
-                                <BookShelf key={bookShelf.id}
-                                    books={booksOnTheShelf}
-                                    onSelectShelf={onSelectShelf}
-                                />
-                            </div>
-                        </div>
+                        <BookShelf key={bookShelf.id}
+                            books={books}
+                            bookShelf={bookShelf}
+                            onSelectShelf={onSelectShelf}
+                        />
                     );
-                })
-                }
+                })}
             </div>
         </div>
     );

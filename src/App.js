@@ -34,13 +34,11 @@ class BooksApp extends React.Component {
   set the initial state with the getAll method from the BooksAPI inside the
   componentDidMount lifecycle event:
   */
-  componentDidMount() {
-    BooksAPI.getAll()
-      .then((books) => {
+  async componentDidMount() {
+    const books = await BooksAPI.getAll()
         this.setState(() => ({
           books: books
         }));
-      });
   };
   /* 
   this callback method is used to move a book from one shelf to another with the

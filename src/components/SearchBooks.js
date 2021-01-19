@@ -6,28 +6,42 @@ import { Link } from 'react-router-dom';
 class SearchBooks extends React.Component {
     state = {
         filteredBooks: [],
-        searchText: '',
+        query: "",
     };
-
     /* 
-    first: take the input from the user to update the searchText state
-    second: take the searchText state to update the filteredBooks state
-    the filteredBooks state will then be rendered to the ui
+    Method to update the query state with the onChange input,
+    given by the user:
     */
-    updateSearchText = searchText => {
+    updateQuery = query => {
         this.setState(() => ({
-            searchText: searchText
+            query: query
         }));
-        
-        if (searchText !== '') {
-            BooksAPI.search(searchText)
-            .then(books => {
-                books.length > 0
-                ? this.setState({ filteredBooks: books })
-                : this.setState({ filteredBooks: [] })
-            });
-            /* if the searchText state is empty again, the filteredBooks state will also be set to empty: */
-        } else if (searchText === '') {
+        this.componentDidMount();
+    };
+    /* 
+    I wrap the functionality of fetching data into a componentDidMount Lifecycle method
+    to fix the error, that my search results still show even if I deleted the
+    search text inside the query state:
+    */
+    componentDidMount() {
+        const query = this.state.query;
+        /* If the query state is not empty, invoke the BooksAPI.search method */
+        if (query !== "") {
+            BooksAPI.search(query)
+            .then((query) => {
+                if (query) {
+                    this.setState(() => ({
+                        filteredBooks: query,
+                    }))
+                } else {
+                    this.setState(() => ({
+                        filteredBooks: [],
+                    }))
+                }
+            })
+            .catch((err) => console.log(err));
+            /* if the query state is empty again, the filteredBooks state will also be set back to empty: */
+        } else if (query === "") {
             this.setState(() => ({
                 filteredBooks: [],
             }));
@@ -35,7 +49,7 @@ class SearchBooks extends React.Component {
     };
 
     render() {
-        const { filteredBooks, searchText } = this.state;
+        const { filteredBooks, query } = this.state;
         const { books, onSelectShelf } = this.props;
 
         return(
@@ -50,14 +64,15 @@ class SearchBooks extends React.Component {
                     <input 
                         type="text"
                         placeholder="Search by title or author"
-                        value={searchText}
-                        onChange={(event) => this.updateSearchText(event.target.value)}
+                        value={query}
+                        onChange={(event) => this.updateQuery(event.target.value)}
                     />
                 </div>
                 </div>
             <div className="search-books-results">
-                <ol className="books-grid">
-                    {filteredBooks.map(book => {
+                { filteredBooks.length > 0 && (
+                    <ol className="books-grid">
+                    {filteredBooks.map((book) => {
                         return (
                             <Book key={book.title}
                                 books={books}
@@ -66,7 +81,8 @@ class SearchBooks extends React.Component {
                             />
                         )
                     })}
-                </ol>
+                    </ol>
+                )}
             </div>
           </div>
         );

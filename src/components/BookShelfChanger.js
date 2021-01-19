@@ -4,28 +4,21 @@ class BookShelfChanger extends React.Component {
     
     handleChange = event => {
         const { value } = event.target
+        /*
+        Call the callback function that was passed to this component from App.js 
+        with the book props and the book.shelf value selected by the user.
+        This callback allows the child component BookShelfChanger to pass data
+        back to the parent component App.js:
+        */
         this.props.onSelectShelf(this.props.book, value);
     };
 
     render() {
-        const { book, books } = this.props;
-
-        /* The option "None" is selected as default, if a book has not been assigned to a shelf: */
-        let defaultShelf = "none";
-
-        /*         
-        If a book is assigned to a shelf on the main page and that book appears on
-        the search page, the correct shelf is be selected on the search page:
-        */
-        books.forEach((element) => {
-            if (element.title === book.title) {
-                defaultShelf = element.shelf
-            }
-        });
+        const { book } = this.props;
 
         return (
             <div className="book-shelf-changer">
-                <select value={defaultShelf} onChange={this.handleChange}>
+                <select value={book.shelf} onChange={this.handleChange}>
                     <option value="move" disabled>Move to...</option>
                     <option value="currentlyReading">Currently Reading</option>
                     <option value="wantToRead">Want to Read</option>

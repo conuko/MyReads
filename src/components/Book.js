@@ -19,8 +19,8 @@ const Book = props => {
                         onSelectShelf={onSelectShelf}
                     />
                 </div>
-            <div className="book-title">{books.title}</div>
-            <div className="book-authors">{books.authors}</div>
+            <div className="book-title">{book.title}</div>
+            <div className="book-authors">{book.authors}</div>
             </div>
         </li>
     )

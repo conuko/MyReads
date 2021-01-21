@@ -74,7 +74,7 @@ class SearchBooks extends React.Component {
                     <ol className="books-grid">
                     {filteredBooks.map((book) => {
                         return (
-                            <Book key={book.title}
+                            <Book key={book.id}
                                 books={books}
                                 book={book}
                                 onSelectShelf={onSelectShelf}

@@ -6,7 +6,6 @@ import SearchBooks from './components/SearchBooks';
 import { Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-
 /*     
 create an array for the 3 different shelfes with their id and name:
 */

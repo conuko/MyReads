@@ -13,8 +13,6 @@ class BookShelfChanger extends React.Component {
         this.props.onSelectShelf(this.props.book, value);
     };
 
-    
-
     render() {
         const { book, books } = this.props;
 
@@ -34,8 +32,6 @@ class BookShelfChanger extends React.Component {
                 currentBookShelf = item.shelf;
             }
         })
-
-
 
         return (
             <div className="book-shelf-changer">

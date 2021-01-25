@@ -7,6 +7,7 @@ const SearchBooks = (props) => {
     const { books, onSelectShelf } = props;
     const [filteredBooks, setFilteredBooks] = useState([]);
     const [query, setQuery] = useState('');
+    const [error, setError] = useState(false);
 
     /* 
     Method to update the query state with the onChange input,
@@ -23,27 +24,27 @@ const SearchBooks = (props) => {
     */
     useEffect(() => {
         /* If the query state is not empty, invoke the BooksAPI.search method */
-        if (query !== "") {
+        if (query) {
             BooksAPI.search(query)
             .then((data) => {
-                if (data) {
+                if (data.length > 0) {
                     setFilteredBooks(data);
+                    setError(false);
                 } else {
                     setFilteredBooks([]);
+                    setError(true);
                 }
             })
             .catch((err) => console.log(err));
             /* if the query state is empty again, the filteredBooks state will also be set back to empty: */
-        } else if (query === "") {
-            setFilteredBooks([]);
         }
+            setFilteredBooks([]);
+            setError(false);
     }, [query]);
 
-
-
-        return(
-            <div className="search-books">
-                <div className="search-books-bar">
+    return(
+        <div className="search-books">
+            <div className="search-books-bar">
                 <Link
                     className="close-search"
                     to="/">
@@ -57,24 +58,27 @@ const SearchBooks = (props) => {
                         onChange={updateQuery}
                     />
                 </div>
-                </div>
+            </div>
             <div className="search-books-results">
                 { filteredBooks.length > 0 && (
-                    <ol className="books-grid">
-                    {filteredBooks.map((book) => {
-                        return (
-                            <Book key={book.id}
-                                books={books}
-                                book={book}
-                                onSelectShelf={onSelectShelf}
-                            />
-                        )
-                    })}
-                    </ol>
+                    <div>
+                        <ol className="books-grid">
+                        {filteredBooks.map((book) => (
+                                <Book key={book.id}
+                                    books={books}
+                                    book={book}
+                                    onSelectShelf={onSelectShelf}
+                                />
+                            ))}
+                        </ol>
+                    </div>
+                )}
+                { error && (
+                    <h3>No books found. Please try again!</h3>
                 )}
             </div>
-          </div>
-        );
+        </div>
+    );
 };
 
 export default SearchBooks;

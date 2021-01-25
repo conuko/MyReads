@@ -1,7 +1,7 @@
 import React from 'react'
 
 const BookShelfChanger = (props) => {
-    const { book, books } = props;
+    const { book, books, onSelectShelf } = props;
     
     const handleChange = event => {
         const { value } = event.target
@@ -11,10 +11,8 @@ const BookShelfChanger = (props) => {
         This callback allows the child component BookShelfChanger to pass data
         back to the parent component App.js:
         */
-        this.props.onSelectShelf(this.props.book, value);
+        onSelectShelf(book, value);
     };
-
-        
 
     /*
     When a book that is already on the bookshelf appears on the search page, it should have the same state.

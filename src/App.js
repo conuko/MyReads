@@ -3,8 +3,8 @@ import * as BooksAPI from './utils/BooksAPI'
 import './App.css'
 import Library from './components/Library';
 import SearchBooks from './components/SearchBooks';
+import SearchButton from './components/SearchButton';
 import { Route } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
 /*     
 create an array for the 3 different shelfes with their id and name:
@@ -64,19 +64,13 @@ const BooksApp = () => {
       <div className="app">
         <div>
           <Route exact path="/" render={() => (
-            <Library
-              books={books}
-              onSelectShelf={onSelectShelf}
-              bookShelfs={bookShelfs}
-            />
+              <Library
+                books={books}
+                onSelectShelf={onSelectShelf}
+                bookShelfs={bookShelfs}
+              />
           )} />
-          <div className="open-search">
-            <Link to="/search">
-              <button type="button">
-                Add a book
-              </button>
-            </Link>
-          </div>
+        <SearchButton />
         </div>
         <div>
           <Route path="/search" render={() => (

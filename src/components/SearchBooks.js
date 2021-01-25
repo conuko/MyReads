@@ -1,56 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'
 import * as BooksAPI from '../utils/BooksAPI';
 import Book from './Book';
 import { Link } from 'react-router-dom';
 
-class SearchBooks extends React.Component {
-    state = {
-        filteredBooks: [],
-        query: "",
-    };
+const SearchBooks = (props) => {
+    const { books, onSelectShelf } = props;
+    const [filteredBooks, setFilteredBooks] = useState([]);
+    const [query, setQuery] = useState('');
+
     /* 
     Method to update the query state with the onChange input,
     given by the user:
     */
-    updateQuery = query => {
-        this.setState(() => ({
-            query: query
-        }));
-        this.componentDidMount();
+   const updateQuery = event => {
+    setQuery(event.target.value);
     };
+
     /* 
     I wrap the functionality of fetching data into a componentDidMount Lifecycle method
     to fix the error, that my search results still show even if I deleted the
     search text inside the query state:
     */
-    componentDidMount() {
-        const query = this.state.query;
+    useEffect(() => {
         /* If the query state is not empty, invoke the BooksAPI.search method */
         if (query !== "") {
             BooksAPI.search(query)
-            .then((query) => {
-                if (query) {
-                    this.setState(() => ({
-                        filteredBooks: query,
-                    }))
+            .then((data) => {
+                if (data) {
+                    setFilteredBooks(data);
                 } else {
-                    this.setState(() => ({
-                        filteredBooks: [],
-                    }))
+                    setFilteredBooks([]);
                 }
             })
             .catch((err) => console.log(err));
             /* if the query state is empty again, the filteredBooks state will also be set back to empty: */
         } else if (query === "") {
-            this.setState(() => ({
-                filteredBooks: [],
-            }));
+            setFilteredBooks([]);
         }
-    };
+    }, [query]);
 
-    render() {
-        const { filteredBooks, query } = this.state;
-        const { books, onSelectShelf } = this.props;
+
 
         return(
             <div className="search-books">
@@ -65,7 +54,7 @@ class SearchBooks extends React.Component {
                         type="text"
                         placeholder="Search by title or author"
                         value={query}
-                        onChange={(event) => this.updateQuery(event.target.value)}
+                        onChange={updateQuery}
                     />
                 </div>
                 </div>
@@ -86,7 +75,6 @@ class SearchBooks extends React.Component {
             </div>
           </div>
         );
-    };
 };
 
 export default SearchBooks;

@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react'
 import * as BooksAPI from '../utils/BooksAPI';
 import Book from './Book';
 import { Link } from 'react-router-dom';
+import LoaderSpinner from './LoaderSpinner';
 
 const SearchBooks = (props) => {
     const { books, onSelectShelf } = props;
     const [filteredBooks, setFilteredBooks] = useState([]);
     const [query, setQuery] = useState('');
     const [error, setError] = useState(false);
+    const [loader, setLoader] = useState(false);
 
     /* 
     Method to update the query state with the onChange input,
@@ -15,6 +17,7 @@ const SearchBooks = (props) => {
     */
    const updateQuery = event => {
     setQuery(event.target.value);
+    setLoader(true);
     };
 
     /* 
@@ -28,11 +31,14 @@ const SearchBooks = (props) => {
             BooksAPI.search(query)
             .then((data) => {
                 if (data.length > 0) {
+                    setLoader(false);
                     setFilteredBooks(data);
                     setError(false);
                 } else {
                     setFilteredBooks([]);
-                    setError(true);
+                    setTimeout(() => {
+                        setError(true);
+                    }, 2000); 
                 }
             })
             .catch((err) => console.log(err));
@@ -40,7 +46,7 @@ const SearchBooks = (props) => {
         }
             setFilteredBooks([]);
             setError(false);
-    }, [query]);
+    }, [query, loader]);
 
     return(
         <div className="search-books">
@@ -72,6 +78,9 @@ const SearchBooks = (props) => {
                             ))}
                         </ol>
                     </div>
+                )}
+                { loader && (
+                    <LoaderSpinner />
                 )}
                 { error && (
                     <h3>No books found. Please try again!</h3>

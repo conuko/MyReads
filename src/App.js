@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import * as BooksAPI from './utils/BooksAPI'
 import './App.css'
 import Library from './components/Library';
@@ -24,27 +24,27 @@ const bookShelfs = [
   }
 ];
 
-class BooksApp extends React.Component {
-  state = {
-    books: [],
-  };
+const BooksApp = () => {
+  const [books, setBooks] = useState([]);
   
   /* 
   set the initial state with the getAll method from the BooksAPI inside the
   componentDidMount lifecycle event:
   */
-  async componentDidMount() {
-    const books = await BooksAPI.getAll()
-        this.setState(() => ({
-          books: books
-        }));
-  };
+
+  useEffect(() => {
+      BooksAPI.getAll()
+        .then((data) => {
+          setBooks((data));
+        })
+  },[]);
+
   /* 
   this callback method is used to move a book from one shelf to another with the
   select options from BookShelfChanger Component and the update method from
   the BooksAPI:
   */
-  onSelectShelf = async (newBook, value) => {
+  const onSelectShelf = async (newBook, value) => {
     await BooksAPI.update(newBook, value)
       .then(() => {
         /*
@@ -56,21 +56,17 @@ class BooksApp extends React.Component {
         update the state with newBook and filter out the book (if it's there). The concat will add the book
         to the end of the array:
         */
-        this.setState((currentState) => ({
-          books: currentState.books.filter((b) => (b.id !== newBook.id)).concat(newBook),
-        }));
+        setBooks(books.filter((b) => (b.id !== newBook.id)).concat(newBook));
       });
   };
 
-  render() {
-    const { books } = this.state;
     return (
       <div className="app">
         <div>
           <Route exact path="/" render={() => (
             <Library
               books={books}
-              onSelectShelf={this.onSelectShelf}
+              onSelectShelf={onSelectShelf}
               bookShelfs={bookShelfs}
             />
           )} />
@@ -86,13 +82,12 @@ class BooksApp extends React.Component {
           <Route path="/search" render={() => (
               <SearchBooks
                 books={books}
-                onSelectShelf={this.onSelectShelf}
+                onSelectShelf={onSelectShelf}
               />
           )} />
         </div>
       </div>
     );
-  };
 };
 
 export default BooksApp

@@ -31,22 +31,22 @@ const SearchBooks = (props) => {
             BooksAPI.search(query)
             .then((data) => {
                 if (data.length > 0) {
-                    setLoader(false);
                     setFilteredBooks(data);
+                    setLoader(false);
                     setError(false);
                 } else {
                     setFilteredBooks([]);
-                    setTimeout(() => {
-                        setError(true);
-                    }, 2000); 
+                    setError(true);
                 }
+                setLoader(true);
             })
             .catch((err) => console.log(err));
             /* if the query state is empty again, the filteredBooks state will also be set back to empty: */
         }
             setFilteredBooks([]);
             setError(false);
-    }, [query, loader]);
+            setLoader(false);
+    }, [query]);
 
     return(
         <div className="search-books">
@@ -79,9 +79,7 @@ const SearchBooks = (props) => {
                         </ol>
                     </div>
                 )}
-                { loader && (
-                    <LoaderSpinner />
-                )}
+                { loader === true ? <LoaderSpinner /> : null}
                 { error && (
                     <h3>No books found. Please try again!</h3>
                 )}

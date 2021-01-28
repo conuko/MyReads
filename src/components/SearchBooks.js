@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react'
 import * as BooksAPI from '../utils/BooksAPI';
 import Book from './Book';
 import { Link } from 'react-router-dom';
-import LoaderSpinner from './LoaderSpinner';
 
 const SearchBooks = (props) => {
     const { books, onSelectShelf } = props;
     const [filteredBooks, setFilteredBooks] = useState([]);
     const [query, setQuery] = useState('');
     const [error, setError] = useState(false);
-    const [loader, setLoader] = useState(false);
 
     /* 
     Method to update the query state with the onChange input,
@@ -17,7 +15,6 @@ const SearchBooks = (props) => {
     */
    const updateQuery = event => {
     setQuery(event.target.value);
-    setLoader(true);
     };
 
     /* 
@@ -25,28 +22,33 @@ const SearchBooks = (props) => {
     to fix the error, that my search results still show even if I deleted the
     search text inside the query state:
     */
+
+
     useEffect(() => {
-        /* If the query state is not empty, invoke the BooksAPI.search method */
-        if (query) {
-            BooksAPI.search(query)
-            .then((data) => {
-                if (data.length > 0) {
-                    setFilteredBooks(data);
-                    setLoader(false);
-                    setError(false);
-                } else {
-                    setFilteredBooks([]);
+        const fetchData = async () => {
+            setError(false);
+            try {
+                if (query) {
+                    BooksAPI.search(query)
+                        .then((data) => {
+                            if (data.length > 0) {
+                                setFilteredBooks(data);
+                                setError(false);
+                            } else {
+                                setFilteredBooks([]);
+                                setError(true);
+                            }
+                        })
+                    } else {
+                        setFilteredBooks([]);
+                        setError(false);
+                    }
+                } catch (error) {
                     setError(true);
                 }
-                setLoader(true);
-            })
-            .catch((err) => console.log(err));
-            /* if the query state is empty again, the filteredBooks state will also be set back to empty: */
-        }
-            setFilteredBooks([]);
-            setError(false);
-            setLoader(false);
-    }, [query]);
+            };
+            fetchData();
+        }, [query]);
 
     return(
         <div className="search-books">
@@ -79,7 +81,6 @@ const SearchBooks = (props) => {
                         </ol>
                     </div>
                 )}
-                { loader === true ? <LoaderSpinner /> : null}
                 { error && (
                     <h3>No books found. Please try again!</h3>
                 )}

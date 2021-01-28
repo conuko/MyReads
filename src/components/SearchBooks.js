@@ -53,10 +53,10 @@ const SearchBooks = (props) => {
     return(
         <div className="search-books">
             <div className="search-books-bar">
-                <Link
-                    className="close-search"
-                    to="/">
+                <Link to="/">
+                        <button type="button" className="close-search">
                         Close
+                        </button>   
                 </Link>
                 <div className="search-books-input-wrapper">
                     <input 
@@ -82,7 +82,7 @@ const SearchBooks = (props) => {
                     </div>
                 )}
                 { error && (
-                    <h3>No books found. Please try again!</h3>
+                    <h3 className="error-message">No books found. Please try again!</h3>
                 )}
             </div>
         </div>

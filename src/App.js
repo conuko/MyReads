@@ -29,9 +29,8 @@ const BooksApp = () => {
   
   /* 
   set the initial state with the getAll method from the BooksAPI inside the
-  componentDidMount lifecycle event:
+  useEffect lifecycle hook:
   */
-
   useEffect(() => {
       BooksAPI.getAll()
         .then((data) => {
@@ -60,28 +59,28 @@ const BooksApp = () => {
       });
   };
 
-    return (
-      <div className="app">
-        <div>
-          <Route exact path="/" render={() => (
-              <Library
-                books={books}
-                onSelectShelf={onSelectShelf}
-                bookShelfs={bookShelfs}
-              />
-          )} />
+  return (
+    <div className="app">
+      <div>
+        <Route exact path="/" render={() => (
+            <Library
+              books={books}
+              onSelectShelf={onSelectShelf}
+              bookShelfs={bookShelfs}
+            />
+        )} />
         <SearchButton />
-        </div>
-        <div>
-          <Route path="/search" render={() => (
-              <SearchBooks
-                books={books}
-                onSelectShelf={onSelectShelf}
-              />
-          )} />
-        </div>
       </div>
-    );
+      <div>
+        <Route path="/search" render={() => (
+            <SearchBooks
+              books={books}
+              onSelectShelf={onSelectShelf}
+            />
+        )} />
+      </div>
+    </div>
+  );
 };
 
 export default BooksApp

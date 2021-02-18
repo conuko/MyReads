@@ -18,12 +18,10 @@ const SearchBooks = (props) => {
     };
 
     /* 
-    I wrap the functionality of fetching data into a componentDidMount Lifecycle method
+    I wrap the functionality of fetching data into a useEffect Lifecycle hook
     to fix the error, that my search results still show even if I deleted the
     search text inside the query state:
     */
-
-
     useEffect(() => {
         const fetchData = async () => {
             setError(false);

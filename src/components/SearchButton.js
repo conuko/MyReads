@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom';
 const SearchButton = () => {
 
     return(
-        <Route exact path="/" render={() => (
+        <Route exact path="/MyReads" render={() => (
         <div className="open-search">
             <Link to="/search">
               <button type="button">

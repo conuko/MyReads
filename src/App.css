@@ -7,7 +7,7 @@ body {
 }
 
 body, .app {
-  background: #515E7B;
+  background: #FAFBFC;
 }
 
 /* main page */
@@ -16,6 +16,9 @@ body, .app {
   padding: 10px 0;
   background: #183153;
   text-align: center;
+    -webkit-box-shadow: 0 8px 6px -6px black;
+       -moz-box-shadow: 0 8px 6px -6px black;
+            box-shadow: 0 8px 6px -6px black;
 }
 
 .list-books-title h1 {

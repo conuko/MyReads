@@ -51,7 +51,7 @@ const SearchBooks = (props) => {
     return(
         <div className="search-books">
             <div className="search-books-bar">
-                <Link to="/MyReads">
+                <Link to="/my-reads">
                         <button type="button" className="close-search">
                         Close
                         </button>   

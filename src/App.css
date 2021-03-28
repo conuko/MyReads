@@ -43,7 +43,7 @@ body, .app {
 }
 
 .bookshelf-title {
-  border-bottom: 3px solid rgba(248, 249, 250, 0.1);
+  border-bottom: 1px solid lightgrey;
   font-weight: 800;
   color: #001C40
 }
@@ -96,14 +96,14 @@ body, .app {
   width: 100%;
   padding: 15px 10px;
   font-size: 1.25em;
-  border: 1px solid grey;
+  border: 1px solid #FAFBFC;
   border-radius: 5px;
   outline: none;
 }
 
 .search-books-bar input:hover, .search-books-bar input:focus {
   border: 1.5px solid #FFD43B;
-  background-color: white;
+  background-color: #FAFBFC;
 }
 
 .close-search {
@@ -169,7 +169,7 @@ body, .app {
 
 .book-title {
   margin-top: 10px;
-  color: #F8F9FA; 
+  color: #183153; 
 }
 
 .book-authors {

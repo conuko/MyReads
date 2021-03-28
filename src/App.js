@@ -62,7 +62,7 @@ const BooksApp = () => {
   return (
     <div className="app">
       <div>
-        <Route exact path="/MyReads" render={() => (
+        <Route exact path="/my-reads" render={() => (
             <Library
               books={books}
               onSelectShelf={onSelectShelf}
@@ -72,7 +72,7 @@ const BooksApp = () => {
         <SearchButton />
       </div>
       <div>
-        <Route path="/search" render={() => (
+        <Route path="/my-reads/search" render={() => (
             <SearchBooks
               books={books}
               onSelectShelf={onSelectShelf}

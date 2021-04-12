@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/myreads/static/css/main.07cafd08.chunk.css",
+    "main.js": "/myreads/static/js/main.0f81ca70.chunk.js",
+    "main.js.map": "/myreads/static/js/main.0f81ca70.chunk.js.map",
+    "runtime-main.js": "/myreads/static/js/runtime-main.186c215e.js",
+    "runtime-main.js.map": "/myreads/static/js/runtime-main.186c215e.js.map",
+    "static/js/2.9f14a2a8.chunk.js": "/myreads/static/js/2.9f14a2a8.chunk.js",
+    "static/js/2.9f14a2a8.chunk.js.map": "/myreads/static/js/2.9f14a2a8.chunk.js.map",
+    "index.html": "/myreads/index.html",
+    "static/css/main.07cafd08.chunk.css.map": "/myreads/static/css/main.07cafd08.chunk.css.map",
+    "static/js/2.9f14a2a8.chunk.js.LICENSE.txt": "/myreads/static/js/2.9f14a2a8.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/myreads/static/media/plus-solid.c82024f4.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.186c215e.js",
+    "static/js/2.9f14a2a8.chunk.js",
+    "static/css/main.07cafd08.chunk.css",
+    "static/js/main.0f81ca70.chunk.js"
+  ]
+}

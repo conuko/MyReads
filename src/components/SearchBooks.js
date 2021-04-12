@@ -13,8 +13,8 @@ const SearchBooks = (props) => {
     Method to update the query state with the onChange input,
     given by the user:
     */
-   const updateQuery = event => {
-    setQuery(event.target.value);
+    const updateQuery = event => {
+        setQuery(event.target.value);
     };
 
     /* 
@@ -37,27 +37,27 @@ const SearchBooks = (props) => {
                                 setError(true);
                             }
                         })
-                    } else {
-                        setFilteredBooks([]);
-                        setError(false);
-                    }
-                } catch (error) {
-                    setError(true);
+                } else {
+                    setFilteredBooks([]);
+                    setError(false);
                 }
-            };
-            fetchData();
-        }, [query]);
+            } catch (error) {
+                setError(true);
+            }
+        };
+        fetchData();
+    }, [query]);
 
-    return(
+    return (
         <div className="search-books">
             <div className="search-books-bar">
-                <Link to="/my-reads">
-                        <button type="button" className="close-search">
+                <Link to="/MyReads">
+                    <button type="button" className="close-search">
                         Close
-                        </button>   
+                        </button>
                 </Link>
                 <div className="search-books-input-wrapper">
-                    <input 
+                    <input
                         type="text"
                         placeholder="Search by title or author"
                         value={query}
@@ -66,10 +66,10 @@ const SearchBooks = (props) => {
                 </div>
             </div>
             <div className="search-books-results">
-                { filteredBooks.length > 0 && (
+                {filteredBooks.length > 0 && (
                     <div>
                         <ol className="books-grid">
-                        {filteredBooks.map((book) => (
+                            {filteredBooks.map((book) => (
                                 <Book key={book.id}
                                     books={books}
                                     book={book}
@@ -79,7 +79,7 @@ const SearchBooks = (props) => {
                         </ol>
                     </div>
                 )}
-                { error && (
+                {error && (
                     <h3 className="error-message">No books found. Please try again!</h3>
                 )}
             </div>

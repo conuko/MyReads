@@ -10,33 +10,33 @@ import { Route } from 'react-router-dom';
 create an array for the 3 different shelfes with their id and name:
 */
 const bookShelfs = [
-  { 
-      id: "currentlyReading",
-      name: "Currently Reading"
+  {
+    id: "currentlyReading",
+    name: "Currently Reading"
   },
-  { 
-      id: "wantToRead",
-      name: "Want to Read"
+  {
+    id: "wantToRead",
+    name: "Want to Read"
   },
-  { 
-      id:"read", 
-      name: "Read"
+  {
+    id: "read",
+    name: "Read"
   }
 ];
 
 const BooksApp = () => {
   const [books, setBooks] = useState([]);
-  
+
   /* 
   set the initial state with the getAll method from the BooksAPI inside the
   useEffect lifecycle hook:
   */
   useEffect(() => {
-      BooksAPI.getAll()
-        .then((data) => {
-          setBooks((data));
-        })
-  },[]);
+    BooksAPI.getAll()
+      .then((data) => {
+        setBooks((data));
+      })
+  }, []);
 
   /* 
   this callback method is used to move a book from one shelf to another with the
@@ -62,21 +62,21 @@ const BooksApp = () => {
   return (
     <div className="app">
       <div>
-        <Route exact path="/my-reads" render={() => (
-            <Library
-              books={books}
-              onSelectShelf={onSelectShelf}
-              bookShelfs={bookShelfs}
-            />
+        <Route exact path="/MyReads" render={() => (
+          <Library
+            books={books}
+            onSelectShelf={onSelectShelf}
+            bookShelfs={bookShelfs}
+          />
         )} />
         <SearchButton />
       </div>
       <div>
-        <Route path="/my-reads/search" render={() => (
-            <SearchBooks
-              books={books}
-              onSelectShelf={onSelectShelf}
-            />
+        <Route path="/MyReads/search" render={() => (
+          <SearchBooks
+            books={books}
+            onSelectShelf={onSelectShelf}
+          />
         )} />
       </div>
     </div>
